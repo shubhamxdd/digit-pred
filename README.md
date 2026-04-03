@@ -14,6 +14,10 @@ The frontend supports three input modes:
 
 All three models run for each request, and the UI shows side-by-side predictions plus agreement/disagreement.
 
+## Deployment
+
+For cloud deployment steps, see `DEPLOYMENT.md`.
+
 ## Project Structure
 
 - `mnist.ipynb` - original notebook
