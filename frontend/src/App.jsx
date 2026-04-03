@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 
 const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:8000";
+const MNIST_SIZE = 28;
 
 const emptyResult = {
   source: "",
@@ -116,7 +117,14 @@ export default function App() {
 
   const submitDraw = async () => {
     const canvas = canvasRef.current;
-    const imageBase64 = canvas.toDataURL("image/png");
+
+    const scaledCanvas = document.createElement("canvas");
+    scaledCanvas.width = MNIST_SIZE;
+    scaledCanvas.height = MNIST_SIZE;
+    const scaledCtx = scaledCanvas.getContext("2d");
+    scaledCtx.imageSmoothingEnabled = true;
+    scaledCtx.drawImage(canvas, 0, 0, MNIST_SIZE, MNIST_SIZE);
+    const imageBase64 = scaledCanvas.toDataURL("image/png");
 
     return fetchJson(`${API_BASE}/predict/canvas`, {
       method: "POST",
